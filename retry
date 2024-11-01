@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Proxy</title>
+</head>
+<body>
+    <input type="text" id="url" placeholder="Enter URL" />
+    <button onclick="fetchContent()">Fetch Content</button>
+    <div id="content"></div>
+
+    <script>
+        async function fetchContent() {
+            const url = document.getElementById('url').value;
+            try {
+                const response = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+                const text = await response.text();
+                document.getElementById('content').innerHTML = text;
+            } catch (error) {
+                document.getElementById('content').innerText = "Error: " + error;
+            }
+        }
+    </script>
+</body>
+</html>
