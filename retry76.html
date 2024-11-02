@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Proxy</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #urlInput { width: 100%; padding: 10px; }
+        #fetchButton { padding: 10px; }
+        #response { margin-top: 20px; }
+        pre { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Simple Proxy</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL to fetch" />
+    <button id="fetchButton">Fetch</button>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', () => {
+            const url = document.getElementById('urlInput').value;
+            const proxyUrl = 'https://api.allorigins.win/get?url='; // Use All Origins proxy
+
+            fetch(proxyUrl + encodeURIComponent(url))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('response').innerHTML = '<pre>' + data.contents + '</pre>';
+                })
+                .catch(error => {
+                    document.getElementById('response').innerHTML = 'Error: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
