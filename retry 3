@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rammerhead Proxy</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #fetchButton { padding: 10px; }
+        #response { margin-top: 20px; }
+        pre { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Rammerhead Proxy</h1>
+    <button id="fetchButton">Fetch Rammerhead Content</button>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', () => {
+            const proxyUrl = 'https://api.allorigins.win/get?url='; // CORS proxy
+            const targetUrl = 'http://rammerhead.command.enterprises'; // Target URL
+
+            fetch(proxyUrl + encodeURIComponent(targetUrl))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('response').innerHTML = '<pre>' + data.contents + '</pre>';
+                })
+                .catch(error => {
+                    document.getElementById('response').innerHTML = 'Error: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
